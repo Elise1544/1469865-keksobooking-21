@@ -1,7 +1,6 @@
 'use strict';
 
 const map = document.querySelector(`.map`);
-const mapPin = document.querySelector(`.map__pin`);
 const mapPins = document.querySelector(`.map__pins`);
 
 const PIN__WIDTH = 40;
@@ -16,22 +15,14 @@ let checkins = [`12:00`, `13:00`, `14:00`];
 let checkouts = [`12:00`, `13:00`, `14:00`];
 let features = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
 let descriptions = [`Великолепная квартира-студия в центре Токио. Подходит как туристам, так и бизнесменам. Квартира полностью укомплектована и недавно отремонтирована.`];
-let photos = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`]
-
-let getRandomElement = function (array) {
-  for (let j = 0; j < array.length; j++) {
-    let k = Math.floor(Math.random() * (j + 1));
-    [array[j], array[k]] = [array[k], array[j]];
-  }
-  return array;
-}
+let photos = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`];
 
 let getRandomAmount = function (min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
 
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 let getRandomArray = function (array, length) {
   let result = [];
@@ -43,7 +34,7 @@ let getRandomArray = function (array, length) {
   }
 
   return result;
-}
+};
 
 let getAdverts = function () {
   let adverts = [];
@@ -54,7 +45,7 @@ let getAdverts = function () {
     let location = {
       x: getRandomAmount(0, clientWidth),
       y: getRandomAmount(130, 580)
-    }
+    };
 
     adverts[k] = {
       author: {
@@ -80,7 +71,7 @@ let getAdverts = function () {
     };
   }
   return adverts;
-}
+};
 
 let offers = getAdverts();
 
@@ -96,7 +87,7 @@ let renderPopup = function (offer) {
   advertAvatar.alt = offer.offer.title;
 
   return advertElement;
-}
+};
 
 let createPins = function () {
   const fragment = document.createDocumentFragment();
@@ -104,7 +95,7 @@ let createPins = function () {
     fragment.appendChild(renderPopup(offers[i]));
   }
   mapPins.appendChild(fragment);
-}
+};
 
 mapPins.classList.remove(`map--faded`);
 
