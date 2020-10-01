@@ -6,16 +6,16 @@ const mapPins = document.querySelector(`.map__pins`);
 const PIN__WIDTH = 40;
 const PIN__HEIGHT = 44;
 const AMOUNT = 8;
-const clientWidth = map.clientWidth - PIN__WIDTH * 2;
+const CLIENT__WIDTH = map.clientWidth - PIN__WIDTH * 2;
 
-let users = [`01`, `02`, `03`, `04`, `05`, `06`, `07`, `08`];
-let titles = [`Уютное гнездышко для молодоженов`];
-let types = [`palace`, `flat`, `house`, `bungalow`];
-let checkins = [`12:00`, `13:00`, `14:00`];
-let checkouts = [`12:00`, `13:00`, `14:00`];
-let features = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
-let descriptions = [`Великолепная квартира-студия в центре Токио. Подходит как туристам, так и бизнесменам. Квартира полностью укомплектована и недавно отремонтирована.`];
-let photos = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`];
+const users = [`01`, `02`, `03`, `04`, `05`, `06`, `07`, `08`];
+const titles = [`Уютное гнездышко для молодоженов`];
+const types = [`palace`, `flat`, `house`, `bungalow`];
+const checkins = [`12:00`, `13:00`, `14:00`];
+const checkouts = [`12:00`, `13:00`, `14:00`];
+const features = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
+const descriptions = [`Великолепная квартира-студия в центре Токио. Подходит как туристам, так и бизнесменам. Квартира полностью укомплектована и недавно отремонтирована.`];
+const photos = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`];
 
 let getRandomAmount = function (min, max) {
   min = Math.ceil(min);
@@ -36,37 +36,36 @@ let getRandomArray = function (array, length) {
   return result;
 };
 
+let locationX = [];
+let locationY = [];
+for (let j = 0; j < AMOUNT; j++) {
+  locationX[j] = getRandomAmount(0, CLIENT__WIDTH);
+  locationY[j] = getRandomAmount(130, 580);
+}
+
 let getAdverts = function () {
   let adverts = [];
-
   for (let k = 0; k < AMOUNT; k++) {
-    let amountOfFeatures = getRandomAmount(0, features.length);
-    let amountOfPhotos = getRandomAmount(0, photos.length);
-    let location = {
-      x: getRandomAmount(0, clientWidth),
-      y: getRandomAmount(130, 580)
-    };
-
     adverts[k] = {
       author: {
         avatar: `img/avatars/user` + users[k] + `.png`
       },
       offer: {
         title: titles[Math.floor(Math.random() * titles.length)],
-        address: `${location.x}, ${location.y}`,
+        address: `${locationX[k]}, ${locationY[k]}`,
         price: getRandomAmount(1000, 10000),
         type: types[Math.floor(Math.random() * types.length)],
         rooms: getRandomAmount(1, 4),
         guests: getRandomAmount(1, 8),
         checkin: checkins[Math.floor(Math.random() * checkins.length)],
         checkout: checkouts[Math.floor(Math.random() * checkouts.length)],
-        features: getRandomArray(features, amountOfFeatures),
+        features: getRandomArray(features, getRandomAmount(0, features.length)),
         description: descriptions[Math.floor(Math.random() * descriptions.length)],
-        photos: getRandomArray(photos, amountOfPhotos)
+        photos: getRandomArray(photos, getRandomAmount(0, photos.length))
       },
       location: {
-        x: location.x,
-        y: location.y
+        x: locationX[k],
+        y: locationY[k]
       }
     };
   }
