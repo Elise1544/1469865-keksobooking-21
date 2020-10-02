@@ -36,42 +36,41 @@ let getRandomArray = function (array, length) {
   return result;
 };
 
-let locationX = [];
-let locationY = [];
-for (let j = 0; j < AMOUNT; j++) {
-  locationX[j] = getRandomAmount(0, CLIENT__WIDTH);
-  locationY[j] = getRandomAmount(130, 580);
-}
+let getAdvert = function (client) {
+  let locationX = getRandomAmount(0, CLIENT__WIDTH);
+  let locationY = getRandomAmount(130, 580);
+  let advert = {
+    author: {
+      avatar: `img/avatars/user` + client + `.png`
+    },
+    offer: {
+      title: titles[Math.floor(Math.random() * titles.length)],
+      address: `${locationX}, ${locationY}`,
+      price: getRandomAmount(1000, 10000),
+      type: types[Math.floor(Math.random() * types.length)],
+      rooms: getRandomAmount(1, 4),
+      guests: getRandomAmount(1, 8),
+      checkin: checkins[Math.floor(Math.random() * checkins.length)],
+      checkout: checkouts[Math.floor(Math.random() * checkouts.length)],
+      features: getRandomArray(features, getRandomAmount(0, features.length)),
+      description: descriptions[Math.floor(Math.random() * descriptions.length)],
+      photos: getRandomArray(photos, getRandomAmount(0, photos.length))
+    },
+    location: {
+      x: locationX,
+      y: locationY
+    }
+  };
+  return advert;
+};
 
 let getAdverts = function () {
   let adverts = [];
   for (let k = 0; k < AMOUNT; k++) {
-    adverts[k] = {
-      author: {
-        avatar: `img/avatars/user` + users[k] + `.png`
-      },
-      offer: {
-        title: titles[Math.floor(Math.random() * titles.length)],
-        address: `${locationX[k]}, ${locationY[k]}`,
-        price: getRandomAmount(1000, 10000),
-        type: types[Math.floor(Math.random() * types.length)],
-        rooms: getRandomAmount(1, 4),
-        guests: getRandomAmount(1, 8),
-        checkin: checkins[Math.floor(Math.random() * checkins.length)],
-        checkout: checkouts[Math.floor(Math.random() * checkouts.length)],
-        features: getRandomArray(features, getRandomAmount(0, features.length)),
-        description: descriptions[Math.floor(Math.random() * descriptions.length)],
-        photos: getRandomArray(photos, getRandomAmount(0, photos.length))
-      },
-      location: {
-        x: locationX[k],
-        y: locationY[k]
-      }
-    };
+    adverts[k] = getAdvert(users[k], k);
   }
   return adverts;
 };
-
 let offers = getAdverts();
 
 let renderPopup = function (offer) {
