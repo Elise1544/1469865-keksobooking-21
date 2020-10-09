@@ -42,7 +42,6 @@
     price.reportValidity();
   };
 
-
   const getPrice = function () {
     if (type.value === `flat`) {
       price.placeholder = `5000`;
