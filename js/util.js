@@ -1,20 +1,23 @@
 'use strict';
 
 (function () {
-  const mainPin = document.querySelector(`.map__pin--main`);
+  window.getRandomAmount = function (min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
 
-  mainPin.addEventListener(`mousedown`, function (evt) {
-    if (evt.which === 1) {
-      window.getActive();
-      window.createPins();
-    }
-  });
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
 
-  mainPin.addEventListener(`keydown`, function (evt) {
-    if (evt.key === `Enter`) {
-      window.getActive();
-      window.createPins();
+  window.getRandomArray = function (array, length) {
+    let result = [];
+
+    for (let i = 0; i < length; i++) {
+      if (!result.includes[i]) {
+        result.push(array[i]);
+      }
     }
-  });
+
+    return result;
+  };
 
 })();
