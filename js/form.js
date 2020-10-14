@@ -93,9 +93,7 @@
     capacity.reportValidity();
   };
 
-  // const getAddress = function () {
   address.value = mainPin.style.left + `, ` + mainPin.style.top;
-  // };
 
   price.addEventListener(`input`, function () {
     getPriceMinimum(type.value);
@@ -112,4 +110,12 @@
   capacity.addEventListener(`change`, function () {
     getCapacity();
   });
+
+  // adForm.addEventListener(`submit`, function (evt) {
+  //   window.upload(new FormData(adForm), function (response) {
+  //     map.classList.add(`map--faded`);
+  //     adForm.classList.add(`ad-form--disabled`);
+  //   });
+  //   evt.preventDefault();
+  // })
 })();
