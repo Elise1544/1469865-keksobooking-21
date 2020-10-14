@@ -1,7 +1,7 @@
 'use strict';
 (function () {
   const URL = `https://21.javascript.pages.academy/keksobooking/data`;
-  let StatusCode = {
+  let codes = {
     OK: 200,
     NOT_FOUND: 404,
     SERVER_ERROR: 500,
@@ -14,7 +14,7 @@
 
     xhr.open(`GET`, URL);
     xhr.addEventListener(`load`, function () {
-      if (xhr.status === StatusCode.OK) {
+      if (xhr.status === codes.OK) {
         onSuccess(xhr.response);
       } else {
         onError(`Статус ответа: ` + xhr.status + ` ` + xhr.statusText);
