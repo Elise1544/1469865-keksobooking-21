@@ -76,22 +76,24 @@
       palace: `дворец`
     };
 
-    // const getCapacityRooms = function () {
+    // let proposal = window.offers;
+
+    // const getCapacityRooms = function (proposal) {
     //   let rooms;
-    //   if (offers.offer.rooms === 1) {
-    //     `${offers.offer.rooms} комната для`
+    //   if (proposal.offer.rooms === 1) {
+    //     `${proposal.offer.rooms} комната для`
     //   } else {
-    //     `${offers.offer.rooms} комнаты для `
+    //     `${proposal.offer.rooms} комнаты для `
     //   }
     //   return rooms;
     // };
 
-    // const getCapacityGuests = function () {
+    // const getCapacityGuests = function (proposal) {
     //   let guests;
-    //   if (offers.offer.guests === 1) {
-    //     `${offers.offer.guests} гостя.`
+    //   if (proposal.offer.guests === 1) {
+    //     `${proposal.offer.guests} гостя.`
     //   } else {
-    //     `${offers.offer.guests} гостей.`
+    //     `${proposal.offer.guests} гостей.`
     //   }
     //   return guests;
     // };
@@ -112,12 +114,12 @@
     return card;
   };
 
-  window.addPopups = function (arr) {
+  window.popupsArray = function (offersData) {
     const mapFiltersContainer = document.querySelector(`.map__filters-container`);
 
     let fragment = document.createDocumentFragment();
-    for (let i = 0; i < arr.length; i++) {
-      fragment.appendChild(renderPopup(arr[i]));
+    for (let i = 0; i < offersData.length; i++) {
+      fragment.appendChild(renderPopup(offersData[i]));
     }
 
     mapFiltersContainer.before(fragment);

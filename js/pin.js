@@ -1,9 +1,9 @@
 'use strict';
 
 (function () {
-  window.download(function (data) {
+  window.download(function (offersData) {
     const mapPins = document.querySelector(`.map__pins`);
-    window.offers = data;
+    window.offers = offersData;
 
     window.createPins = function () {
       const fragment = document.createDocumentFragment();
