@@ -6,13 +6,13 @@
 //   const PIN__WIDTH = 40;
 //   const CLIENT__WIDTH = map.clientWidth - PIN__WIDTH * 2;
 
-//   // const titles = [`Уютное гнездышко для молодоженов`];
-//   // const types = [`palace`, `flat`, `house`, `bungalow`];
-//   // const checkins = [`12:00`, `13:00`, `14:00`];
-//   // const checkouts = [`12:00`, `13:00`, `14:00`];
-//   // const features = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
-//   // const descriptions = [`Великолепная квартира-студия в центре Токио. Подходит как туристам, так и бизнесменам. Квартира полностью укомплектована и недавно отремонтирована.`];
-//   // const photos = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`];
+//   const titles = [`Уютное гнездышко для молодоженов`];
+//   const types = [`palace`, `flat`, `house`, `bungalow`];
+//   const checkins = [`12:00`, `13:00`, `14:00`];
+//   const checkouts = [`12:00`, `13:00`, `14:00`];
+//   const features = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
+//   const descriptions = [`Великолепная квартира-студия в центре Токио. Подходит как туристам, так и бизнесменам. Квартира полностью укомплектована и недавно отремонтирована.`];
+//   const photos = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`];
 
 //   let getAdvert = function (k) {
 //     let locationX = window.getRandomAmount(0, CLIENT__WIDTH);
@@ -53,3 +53,76 @@
 //   window.offers = getAdverts();
 // })();
 
+(function () {
+  const renderPopup = function (offers) {
+
+    const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
+    const card = cardTemplate.cloneNode(true);
+    const popupAvatar = card.querySelector(`.popup__avatar`);
+    const popupTitle = card.querySelector(`.popup__title`);
+    const popupAddress = card.querySelector(`.popup__text--address`);
+    const popupPrice = card.querySelector(`.popup__text--price`);
+    const popupType = card.querySelector(`.popup__type`);
+    const popupCapacity = card.querySelector(`.popup__text--capacity`);
+    const popupTime = card.querySelector(`.popup__text--time`);
+    const popupFeatures = card.querySelector(`.popup__features`);
+    const popupDescription = card.querySelector(`.popup__description`);
+    const popupPhotos = card.querySelector(`.popup__photos`);
+
+    const types = {
+      bungalow: `бунгало`,
+      flat: `квартира`,
+      house: `дом`,
+      palace: `дворец`
+    };
+
+    // let proposal = window.offers;
+
+    // const getCapacityRooms = function (proposal) {
+    //   let rooms;
+    //   if (proposal.offer.rooms === 1) {
+    //     `${proposal.offer.rooms} комната для`
+    //   } else {
+    //     `${proposal.offer.rooms} комнаты для `
+    //   }
+    //   return rooms;
+    // };
+
+    // const getCapacityGuests = function (proposal) {
+    //   let guests;
+    //   if (proposal.offer.guests === 1) {
+    //     `${proposal.offer.guests} гостя.`
+    //   } else {
+    //     `${proposal.offer.guests} гостей.`
+    //   }
+    //   return guests;
+    // };
+
+    popupTitle.textContent = offers.offer.title;
+    popupAddress.textContent = offers.offer.address;
+    popupPrice.textContent = offers.offer.price + `₽/ночь`;
+    popupType.textContent = types[offers.offer.type];
+    popupCapacity.textContent = `${offers.offer.rooms} комнаты для ` + `${offers.offer.guests} гостей.`;
+    popupTime.textContent = `Заезд после ` + `${offers.offer.checkin}` + `, выезд до ` + `${offers.offer.checkout}`;
+    popupFeatures.textContent = offers.offer.features;
+    popupDescription.textContent = offers.offer.description;
+    for (let i = 0; i < offers.offer.photos.length; i++) {
+      popupPhotos.insertAdjacentHTML(`beforeend`, `<img src = ${offers.offer.photos[i]} class=popup__photo width=45 height=40 alt="Фотография жилья">`);
+    }
+    popupAvatar.scr = offers.author.avatar;
+
+    return card;
+  };
+
+  window.popupsArray = function (offersData) {
+    const mapFiltersContainer = document.querySelector(`.map__filters-container`);
+
+    let fragment = document.createDocumentFragment();
+    for (let i = 0; i < offersData.length; i++) {
+      fragment.appendChild(renderPopup(offersData[i]));
+    }
+
+    mapFiltersContainer.before(fragment);
+  };
+
+})();

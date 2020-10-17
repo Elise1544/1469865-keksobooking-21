@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  const map = document.querySelector(`.map`);
+  window.map = document.querySelector(`.map`);
   const adForm = document.querySelector(`.ad-form`);
   const mapFilters = document.querySelector(`.map__filters`);
   const mainPin = document.querySelector(`.map__pin--main`);
@@ -20,7 +20,7 @@
   }
 
   window.getActive = function () {
-    map.classList.remove(`map--faded`);
+    window.map.classList.remove(`map--faded`);
     adForm.classList.remove(`ad-form--disabled`);
     mapFilters.removeAttribute(`disabled`);
 
