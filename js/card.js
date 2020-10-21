@@ -76,37 +76,41 @@
       palace: `дворец`
     };
 
-    // let proposal = window.offers;
+    const getCapacityRoomsText = function (roomsCount) {
+      switch (roomsCount) {
+        case 1:
+          return `${roomsCount} комната`;
+        case 2:
+        case 3:
+        case 4:
+          return `${roomsCount} комнаты`;
+        default:
+          return `${roomsCount} комнат`;
+      }
+    };
 
-    // const getCapacityRooms = function (proposal) {
-    //   let rooms;
-    //   if (proposal.offer.rooms === 1) {
-    //     `${proposal.offer.rooms} комната для`
-    //   } else {
-    //     `${proposal.offer.rooms} комнаты для `
-    //   }
-    //   return rooms;
-    // };
-
-    // const getCapacityGuests = function (proposal) {
-    //   let guests;
-    //   if (proposal.offer.guests === 1) {
-    //     `${proposal.offer.guests} гостя.`
-    //   } else {
-    //     `${proposal.offer.guests} гостей.`
-    //   }
-    //   return guests;
-    // };
+    const getCapacityGuestsText = function (guestsCount) {
+      switch (guestsCount) {
+        case 1:
+          return `${guestsCount} гостя`;
+        case 0:
+          return `не для гостей`
+        default:
+          return `${guestsCount} гостей`;
+      }
+    }
 
     popupTitle.textContent = offers.offer.title;
     popupAddress.textContent = offers.offer.address;
     popupPrice.textContent = offers.offer.price + `₽/ночь`;
     popupType.textContent = types[offers.offer.type];
-    popupCapacity.textContent = `${offers.offer.rooms} комнаты для ` + `${offers.offer.guests} гостей.`;
+    popupCapacity.textContent = `${getCapacityRoomsText(offers.offer.rooms)} ${offers.offer.guests ? 'для ' : ''}${getCapacityGuestsText(offers.offer.guests)}`;
+    // popupCapacity.textContent = `${offers.offer.rooms} комнаты для ` + `${offers.offer.guests} гостей.`;
     popupTime.textContent = `Заезд после ` + `${offers.offer.checkin}` + `, выезд до ` + `${offers.offer.checkout}`;
     popupFeatures.textContent = offers.offer.features;
     popupDescription.textContent = offers.offer.description;
-    for (let i = 0; i < offers.offer.photos.length; i++) {
+    popupPhotos.src = offers.offer.photos[0];
+    for (let i = 1; i < offers.offer.photos.length; i++) {
       popupPhotos.insertAdjacentHTML(`beforeend`, `<img src = ${offers.offer.photos[i]} class=popup__photo width=45 height=40 alt="Фотография жилья">`);
     }
     popupAvatar.scr = offers.author.avatar;
@@ -114,15 +118,16 @@
     return card;
   };
 
-  window.popupsArray = function (offersData) {
+  window.addPopups = function (popupsArray) {
     const mapFiltersContainer = document.querySelector(`.map__filters-container`);
 
     let fragment = document.createDocumentFragment();
-    for (let i = 0; i < offersData.length; i++) {
-      fragment.appendChild(renderPopup(offersData[i]));
+    for (let i = 0; i < popupsArray.length; i++) {
+      fragment.appendChild(renderPopup(popupsArray[0]));
+      // window.popup = fragment;
     }
-
     mapFiltersContainer.before(fragment);
+    fragment.style.display = `none`;
   };
 
 })();
