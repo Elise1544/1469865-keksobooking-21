@@ -54,7 +54,7 @@
 // })();
 
 (function () {
-  const renderPopup = function (offers) {
+  window.openPopup = function (offers) {
 
     const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
     const card = cardTemplate.cloneNode(true);
@@ -116,18 +116,6 @@
     popupAvatar.scr = offers.author.avatar;
 
     return card;
-  };
-
-  window.addPopups = function (popupsArray) {
-    const mapFiltersContainer = document.querySelector(`.map__filters-container`);
-
-    let fragment = document.createDocumentFragment();
-    for (let i = 0; i < popupsArray.length; i++) {
-      fragment.appendChild(renderPopup(popupsArray[0]));
-      // window.popup = fragment;
-    }
-    mapFiltersContainer.before(fragment);
-    fragment.style.display = `none`;
   };
 
 })();

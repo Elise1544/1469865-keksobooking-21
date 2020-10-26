@@ -7,7 +7,6 @@
     if (evt.which === 1) {
       window.getActive();
       window.createPins();
-      window.addPopups(window.offers);
     }
   });
 
@@ -15,7 +14,6 @@
     if (evt.key === `Enter`) {
       window.getActive();
       window.createPins();
-      window.addPopups(window.offers);
     }
   });
 

@@ -13,4 +13,6 @@
       mapPins.appendChild(fragment);
     };
   }, function () {});
+
+  window.card = window.download();
 })();
