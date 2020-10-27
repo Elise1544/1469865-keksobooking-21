@@ -12,7 +12,8 @@
       }
       mapPins.appendChild(fragment);
     };
+
+    // window.pins = window.createPins();
   }, function () {});
 
-  window.card = window.download();
 })();

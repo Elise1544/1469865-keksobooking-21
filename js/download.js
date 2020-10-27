@@ -32,4 +32,5 @@
     xhr.send();
   };
 
+  // window.pins = window.download();
 })();

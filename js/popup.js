@@ -2,25 +2,20 @@
 
 (function () {
 
-  window.addPopups = function (popupsArray, pinsArray) {
+  window.addPopups = function (card, pin) {
     const mapFiltersContainer = document.querySelector(`.map__filters-container`);
     let fragment = document.createDocumentFragment();
-    for (let i = 0; i < window.offers.length; i++) {
-      window.card[i].addEventListener(`click`, function () {
-        fragment.appendChild(window.openPopup(popupsArray[i]));
+    for (let i = 0; i < pin.length; i++) {
+      pin[i].addEventListener(`click`, function () {
+        fragment.appendChild(window.openPopup(card[i]));
         mapFiltersContainer.before(fragment);
-      })
+      });
     }
     // for (let i = 0; i < popupsArray.length; i++) {
     // window.popup = fragment;
     // }
     // fragment.style.display = `none`;
   };
-  // debugger;
-  // const popup = window.addPopups(window.offers);
-  // const popupArray = document.querySelectorAll(`.popup`);
-  // const buttonClose = document.querySelectorAll(`.popup__close`);
-  // popupArray.forEach.style.display = `none`;
 
   // if(buttonClose){
   //   buttonClose.addEventListener(`click`, function() {

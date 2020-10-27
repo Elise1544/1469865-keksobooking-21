@@ -55,6 +55,8 @@
 
 (function () {
   window.openPopup = function (offers) {
+    // debugger;
+    // let cards = [];
 
     const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
     const card = cardTemplate.cloneNode(true);
@@ -94,28 +96,33 @@
         case 1:
           return `${guestsCount} гостя`;
         case 0:
-          return `не для гостей`
+          return `не для гостей`;
         default:
           return `${guestsCount} гостей`;
       }
-    }
+    };
 
     popupTitle.textContent = offers.offer.title;
     popupAddress.textContent = offers.offer.address;
     popupPrice.textContent = offers.offer.price + `₽/ночь`;
     popupType.textContent = types[offers.offer.type];
-    popupCapacity.textContent = `${getCapacityRoomsText(offers.offer.rooms)} ${offers.offer.guests ? 'для ' : ''}${getCapacityGuestsText(offers.offer.guests)}`;
+    popupCapacity.textContent = `${getCapacityRoomsText(offers.offer.rooms)} ${offers.offer.guests ? `для ` : ``}${getCapacityGuestsText(offers.offer.guests)}`;
     // popupCapacity.textContent = `${offers.offer.rooms} комнаты для ` + `${offers.offer.guests} гостей.`;
     popupTime.textContent = `Заезд после ` + `${offers.offer.checkin}` + `, выезд до ` + `${offers.offer.checkout}`;
     popupFeatures.textContent = offers.offer.features;
     popupDescription.textContent = offers.offer.description;
     popupPhotos.src = offers.offer.photos[0];
-    for (let i = 1; i < offers.offer.photos.length; i++) {
-      popupPhotos.insertAdjacentHTML(`beforeend`, `<img src = ${offers.offer.photos[i]} class=popup__photo width=45 height=40 alt="Фотография жилья">`);
+    for (let j = 1; j < offers.offer.photos.length; j++) {
+      popupPhotos.insertAdjacentHTML(`beforeend`, `<img src = ${offers.offer.photos[j]} class=popup__photo width=45 height=40 alt="Фотография жилья">`);
     }
     popupAvatar.scr = offers.author.avatar;
 
-    return card;
+    window.cards = [];
+    for (let i = 0; i < offers.length; i++) {
+      window.cards[i] = window.openPopup(offers[i]);
+    }
+
+    return window.cards;
   };
 
 })();
