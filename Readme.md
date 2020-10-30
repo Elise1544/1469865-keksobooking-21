@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Елизавета Забродская](https://up.htmlacademy.ru/javascript/21/user/1469865).
-* Наставник: [Никита Сигов](https://htmlacademy.ru/profile/crazer).
+* Наставник: [Василий Подоплелов](https://htmlacademy.ru/profile/id348441).
 
 ---
 
