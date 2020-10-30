@@ -3,7 +3,7 @@
 (function () {
   const mainPin = document.querySelector(`.map__pin--main`);
 
-  let onSuccess = (offersData) => {
+  let onSuccess = function (offersData) {
     window.offers = offersData;
 
     window.getActive();

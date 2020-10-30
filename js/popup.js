@@ -1,43 +1,38 @@
 'use strict';
 
 (function () {
-  //   // popup.classList.add(`visually-hidden`);
+
   let openPopup = function (evt) {
     let targetElement = evt.target;
-
-    // if (targetElement.closest(`button`) || targetElement.classList.contains(`map__pin`) && !targetElement.classList.contains(`map__pin--main`)) {
-    if (targetElement.closest(`button`) || targetElement.classList.contains(`map__pin`)) {
-      const button = targetElement.closest(`button`) ? targetElement.closest(`button`) : targetElement;
+    if (targetElement.closest(`.map__pin:not(.map__pin--main)`) || targetElement.classList.contains(`map__pin:not(.map__pin--main)`)) {
+      const button = targetElement.closest(`.map__pin`) ? targetElement.closest(`.map__pin`) : targetElement;
 
       const dataAttr = button.dataset.offerIndex;
       const currentPinInfo = window.offers[dataAttr];
       window.getPopup(currentPinInfo);
 
-    } else if (!targetElement.classList.contains(`map__pin--main`)) {
+      const buttonClose = document.querySelector(`.popup__close`);
+      buttonClose.addEventListener(`click`, closePopup);
+      document.addEventListener(`keydown`, onEscPress);
+    } else if (targetElement.classList.contains(`map__pin--main`)) {
       // ;
     } else {
       // ;
     }
+
+  };
+
+  let onEscPress = function (evt) {
+    if (evt.key === `Escape`) {
+      evt.preventDefault();
+      closePopup();
+    }
   };
 
   let closePopup = function () {
-    const buttonClose = document.querySelector(`.popup__close`);
     const popup = document.querySelector(`.popup`);
-
-    document.addEventListener(`keydown`, function (evt) {
-      if (evt.key === `Escape`) {
-        evt.preventDefault();
-        // popup.style.display = `none`;
-        popup.parentNode.removeChild(popup);
-      }
-    });
-
-    buttonClose.addEventListener(`click`, function (evt) {
-      evt.preventDefault();
-      // popup.style.display = `none`;
-      popup.parentNode.removeChild(popup);
-    });
-
+    popup.parentNode.removeChild(popup);
+    document.removeEventListener(`keydown`, onEscPress);
   };
 
   const mapPins = document.querySelector(`.map__pins`);
@@ -47,7 +42,5 @@
       openPopup();
     }
   });
-  document.addEventListener(`click`, closePopup);
-  document.addEventListener(`keydown`, closePopup);
 
 })();
