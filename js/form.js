@@ -4,7 +4,6 @@
   window.map = document.querySelector(`.map`);
   const adForm = document.querySelector(`.ad-form`);
   const mapFilters = document.querySelector(`.map__filters`);
-  const mainPin = document.querySelector(`.map__pin--main`);
   const mapFiltersElements = document.querySelectorAll(`.map__filter`);
   const type = adForm.querySelector(`#type`);
   const price = adForm.querySelector(`#price`);
@@ -93,7 +92,9 @@
     capacity.reportValidity();
   };
 
-  address.value = mainPin.style.left + `, ` + mainPin.style.top;
+  window.updateAddressValue = function () {
+    address.value = window.mainPin.style.left + `, ` + window.mainPin.style.top;
+  };
 
   price.addEventListener(`input`, function () {
     getPriceMinimum(type.value);
