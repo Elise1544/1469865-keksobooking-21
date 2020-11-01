@@ -17,7 +17,7 @@
       if (xhr.status === codes.OK) {
         onSuccess(xhr.response);
       } else {
-        onError(`Статус ответа: ` + xhr.status + ` ` + xhr.statusText);
+        window.onError(`Статус ответа: ` + xhr.status + ` ` + xhr.statusText);
       }
     });
 
