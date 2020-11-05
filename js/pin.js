@@ -11,4 +11,12 @@
     window.mapPins.appendChild(fragment);
   };
 
+  window.deletePins = function () {
+    const pins = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+    pins.forEach(function (pin) {
+      pin.remove();
+    });
+  };
+
+
 })();
