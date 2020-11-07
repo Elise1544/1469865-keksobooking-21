@@ -15,10 +15,16 @@
   window.mainPin.addEventListener(`mousedown`, function (evt) {
     evt.preventDefault();
 
+    window.startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
     const {left, top} = window.map.getBoundingClientRect();
 
     const onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
+
 
       const limitY = moveEvt.clientY - top - window.PIN_WIDTH / 2;
       const limitX = moveEvt.clientX - left - window.PIN_WIDTH / 2;

@@ -63,11 +63,12 @@
 
     const popup = document.querySelector(`.popup`);
     if (popup) {
-      popup.parentNode.removeChild(popup);
+      window.closePopup();
     }
 
     const mapFilterContainer = document.querySelector(`.map__filters-container`);
     window.map.insertBefore(card, mapFilterContainer);
+
   };
 
 })();
