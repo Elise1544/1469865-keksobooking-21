@@ -12,7 +12,6 @@
     const popupType = card.querySelector(`.popup__type`);
     const popupCapacity = card.querySelector(`.popup__text--capacity`);
     const popupTime = card.querySelector(`.popup__text--time`);
-    const popupFeatures = card.querySelector(`.popup__features`);
     const popupDescription = card.querySelector(`.popup__description`);
     const popupPhotos = card.querySelector(`.popup__photos`);
 
@@ -30,7 +29,7 @@
       `washer`,
       `elevator`,
       `conditioner`
-    ]
+    ];
 
     const getCapacityRoomsText = function (roomsCount) {
       switch (roomsCount) {
@@ -67,12 +66,12 @@
       if (!offers.offer.features.includes(feature)) {
         card.querySelector(`.popup__feature--${feature}`).remove();
       }
-    };
+    }
     popupDescription.textContent = offers.offer.description;
     popupPhotos.src = offers.offer.photos[0];
     for (let i = 1; i < offers.offer.photos.length; i++) {
       popupPhotos.insertAdjacentHTML(`beforeend`, `<img src = ${offers.offer.photos[i]} class=popup__photo width=45 height=40 alt="Фотография жилья">`);
-    };
+    }
 
     const mapFilterContainer = document.querySelector(`.map__filters-container`);
     window.map.insertBefore(card, mapFilterContainer);

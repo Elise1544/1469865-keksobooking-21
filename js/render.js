@@ -25,14 +25,16 @@
         return (offer.offer.price >= MIN_PRICE) && (offer.offer.price <= MAX_PRICE);
       case `high`:
         return (offer.offer.price > MAX_PRICE);
+      default:
+        return offer === filterPrice.value;
     }
   };
 
   const checkFeatures = function () {
     return Array.from(filterFeatures.querySelectorAll(`input:checked`)).map(function (feature) {
       return feature.value;
-    })
-  }
+    });
+  };
 
   window.getFilter = function (dataOffers) {
 
@@ -48,13 +50,13 @@
         });
         return isOfferFit && isTypeFit && isPriceFit && isRoomsFit && isGuestsFit && isFeaturesFit;
       }).slice(0, window.MAX_PINS);
-  }
+  };
 
   const onFilterChange = function () {
     window.closePopup();
     window.deletePins();
     window.createPins(window.getFilter(window.offers));
-  }
+  };
 
   mapFilter.addEventListener(`change`, onFilterChange);
 

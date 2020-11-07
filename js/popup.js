@@ -8,7 +8,7 @@
     if (popup) {
       window.closePopup();
       window.button.classList.remove(`map__pin--active`);
-    };
+    }
 
     let targetElement = evt.target;
     if (targetElement.closest(`.map__pin:not(.map__pin--main)`) || targetElement.classList.contains(`map__pin:not(.map__pin--main)`)) {
