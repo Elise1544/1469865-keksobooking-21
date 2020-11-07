@@ -3,11 +3,13 @@
 (function () {
   window.mainPin = document.querySelector(`.map__pin--main`);
 
+  window.resetMainPinCoords();
+
   let onSuccess = function (offersData) {
     window.offers = offersData;
 
     window.getActive();
-    window.createPins();
+    window.createPins(window.getFilter(window.offers));
   };
 
   window.mainPin.addEventListener(`mousedown`, function (evt) {

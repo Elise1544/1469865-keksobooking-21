@@ -23,6 +23,15 @@
       palace: `дворец`
     };
 
+    const features = [
+      `wifi`,
+      `dishwasher`,
+      `parking`,
+      `washer`,
+      `elevator`,
+      `conditioner`
+    ]
+
     const getCapacityRoomsText = function (roomsCount) {
       switch (roomsCount) {
         case 1:
@@ -54,17 +63,16 @@
     popupType.textContent = types[offers.offer.type];
     popupCapacity.textContent = `${getCapacityRoomsText(offers.offer.rooms)} ${offers.offer.guests ? `для ` : ``}${getCapacityGuestsText(offers.offer.guests)}`;
     popupTime.textContent = `Заезд после ` + `${offers.offer.checkin}` + `, выезд до ` + `${offers.offer.checkout}`;
-    popupFeatures.textContent = offers.offer.features;
+    for (let feature of features) {
+      if (!offers.offer.features.includes(feature)) {
+        card.querySelector(`.popup__feature--${feature}`).remove();
+      }
+    };
     popupDescription.textContent = offers.offer.description;
     popupPhotos.src = offers.offer.photos[0];
-    for (let j = 1; j < offers.offer.photos.length; j++) {
-      popupPhotos.insertAdjacentHTML(`beforeend`, `<img src = ${offers.offer.photos[j]} class=popup__photo width=45 height=40 alt="Фотография жилья">`);
-    }
-
-    const popup = document.querySelector(`.popup`);
-    if (popup) {
-      window.closePopup();
-    }
+    for (let i = 1; i < offers.offer.photos.length; i++) {
+      popupPhotos.insertAdjacentHTML(`beforeend`, `<img src = ${offers.offer.photos[i]} class=popup__photo width=45 height=40 alt="Фотография жилья">`);
+    };
 
     const mapFilterContainer = document.querySelector(`.map__filters-container`);
     window.map.insertBefore(card, mapFilterContainer);

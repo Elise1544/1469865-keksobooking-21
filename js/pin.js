@@ -3,10 +3,10 @@
 (function () {
   window.mapPins = document.querySelector(`.map__pins`);
 
-  window.createPins = function () {
+  window.createPins = function (data) {
     const fragment = document.createDocumentFragment();
-    for (let i = 0; i < window.offers.length; i++) {
-      fragment.appendChild(window.renderPin(window.offers[i], i));
+    for (let i = 0; i < data.length; i++) {
+      fragment.appendChild(window.renderPin(data[i], i));
     }
     window.mapPins.appendChild(fragment);
   };
@@ -17,6 +17,5 @@
       pin.remove();
     });
   };
-
 
 })();
