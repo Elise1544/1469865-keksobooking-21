@@ -3,12 +3,19 @@
 (function () {
 
   let openPopup = function (evt) {
+
+    const popup = document.querySelector(`.popup`);
+    if (popup) {
+      window.closePopup();
+      window.button.classList.remove(`map__pin--active`);
+    }
+
     let targetElement = evt.target;
     if (targetElement.closest(`.map__pin:not(.map__pin--main)`) || targetElement.classList.contains(`map__pin:not(.map__pin--main)`)) {
       window.button = targetElement.closest(`.map__pin`) ? targetElement.closest(`.map__pin`) : targetElement;
 
       const dataAttr = window.button.dataset.offerIndex;
-      const currentPinInfo = window.offers[dataAttr];
+      const currentPinInfo = window.getFilter(window.offers)[dataAttr];
       window.getPopup(currentPinInfo);
 
       window.button.classList.add(`map__pin--active`);

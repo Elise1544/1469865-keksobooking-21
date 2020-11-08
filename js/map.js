@@ -1,9 +1,6 @@
 'use strict';
 
 (function () {
-  window.PIN_WIDTH = 65;
-  window.PIN_HEIGHT = 65;
-  window.MAX_PIN_HEIGHT = 87;
 
   window.renderPin = function (offer, offerIndex) {
     const pin = document.querySelector(`#pin`);
