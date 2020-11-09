@@ -57,6 +57,7 @@
     for (let mapFiltersElement of mapFiltersElements) {
       mapFiltersElement.setAttribute(`disabled`, `disabled`);
     }
+
     window.resetMainPinCoords();
   };
 
@@ -96,6 +97,7 @@
 
   const hideErrorMessage = function () {
     const errorWindow = document.querySelector(`.error`);
+
     errorWindow.remove();
 
     document.removeEventListener(`click`, onErrorMessageClick);
@@ -128,10 +130,10 @@
   };
 
   window.showErrorMessage = function () {
-    const errorButton = document.querySelector(`.error__button`);
-
     window.createMessage(window.ERROR_WINDOW);
     window.getInactive();
+    const errorButton = document.querySelector(`.error__button`);
+
 
     document.addEventListener(`keydown`, onErrorMessageEscPress);
     document.addEventListener(`click`, onErrorMessageClick);

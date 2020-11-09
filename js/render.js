@@ -52,11 +52,11 @@
       }).slice(0, window.MAX_PINS);
   };
 
-  const onFilterChange = function () {
+  const onFilterChange = window.debounce(function () {
     window.closePopup();
     window.deletePins();
     window.createPins(window.getFilter(window.offers));
-  };
+  });
 
   mapFilter.addEventListener(`change`, onFilterChange);
 
