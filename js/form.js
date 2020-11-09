@@ -128,8 +128,9 @@
   window.adForm.addEventListener(`submit`, function (evt) {
     evt.preventDefault();
     validCapacity();
+    validPriceMinimum();
 
-    if (capacity.validity.valid) {
+    if (capacity.validity.valid && window.price.validity.valid) {
       window.upload(new FormData(window.adForm), onSuccessUpload, window.showErrorMessage);
     }
   });
