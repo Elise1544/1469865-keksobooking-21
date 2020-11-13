@@ -2,45 +2,29 @@
 
 (function () {
 
-  const MAP_MIN_WIDTH = 0;
-  const MAP_MAX_WIDTH = 1200;
-  const MAP_MIN_HEIGTH = 130;
-  const MAP_MAX_HEIGHT = 630;
-
-  const MIN_Y = MAP_MIN_HEIGTH - window.MAX_PIN_HEIGHT;
-  const MAX_Y = MAP_MAX_HEIGHT - window.MAX_PIN_HEIGHT;
-  const MIN_X = MAP_MIN_WIDTH - window.PIN_WIDTH / 2;
-  const MAX_X = MAP_MAX_WIDTH - window.PIN_WIDTH / 2;
-
-  window.mainPin.addEventListener(`mousedown`, function (evt) {
+  window.elements.mainPin.addEventListener(`mousedown`, (evt) => {
     evt.preventDefault();
 
-    window.startCoords = {
-      x: evt.clientX,
-      y: evt.clientY
-    };
+    const {left, top} = window.elements.map.getBoundingClientRect();
 
-    const {left, top} = window.map.getBoundingClientRect();
-
-    const onMouseMove = function (moveEvt) {
+    const onMouseMove = (moveEvt) => {
       moveEvt.preventDefault();
 
+      const limitY = moveEvt.clientY - top - window.elements.PinSpecification.PIN_WIDTH / 2;
+      const limitX = moveEvt.clientX - left - window.elements.PinSpecification.PIN_WIDTH / 2;
 
-      const limitY = moveEvt.clientY - top - window.PIN_WIDTH / 2;
-      const limitX = moveEvt.clientX - left - window.PIN_WIDTH / 2;
-
-      if (limitY > MIN_Y && limitY < MAX_Y) {
-        window.mainPin.style.top = `${limitY}px`;
+      if (limitY > window.elements.PinLimits.MIN_Y && limitY < window.elements.PinLimits.MAX_Y) {
+        window.elements.mainPin.style.top = `${limitY}px`;
       }
-      if (limitX > MIN_X && limitX < MAX_X) {
-        window.mainPin.style.left = `${limitX}px`;
+      if (limitX > window.elements.PinLimits.MIN_X && limitX < window.elements.PinLimits.MAX_X) {
+        window.elements.mainPin.style.left = `${limitX}px`;
       }
-      window.updateAddressValue();
+      window.form.updateAddressValue();
     };
 
-    const onMouseUp = function (upEvt) {
+    const onMouseUp = (upEvt) => {
       upEvt.preventDefault();
-      window.updateAddressValue();
+      window.form.updateAddressValue();
 
       document.removeEventListener(`mousemove`, onMouseMove);
       document.removeEventListener(`mouseup`, onMouseUp);

@@ -2,100 +2,81 @@
 
 (function () {
 
-  window.PIN_WIDTH = 65;
-  window.PIN_HEIGHT = 65;
-  window.MAX_PIN_HEIGHT = 87;
-  window.MAIN_PIN_START_X = 570;
-  window.MAIN_PIN_START_Y = 375;
-
-  window.getRandomAmount = function (min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
-  window.getRandomArray = function (array, length) {
-    let result = [];
-
-    for (let i = 0; i < length; i++) {
-      if (!result.includes[i]) {
-        result.push(array[i]);
-      }
-    }
-
-    return result;
-  };
-
-  window.mapFilters = document.querySelector(`.map__filters`);
+  const mapFilters = document.querySelector(`.map__filters`);
   const mapFiltersElements = document.querySelectorAll(`.map__filter`);
+  const mapFiltersFeatures = document.querySelector(`.map__features`);
+  const price = document.querySelector(`#price`);
 
-  window.mapFilters.setAttribute(`disabled`, `disabled`);
-  for (let mapFiltersElement of mapFiltersElements) {
+  mapFilters.setAttribute(`disabled`, `disabled`);
+
+  mapFiltersElements.forEach((mapFiltersElement) => {
     mapFiltersElement.setAttribute(`disabled`, `disabled`);
-  }
+  });
 
-  window.getActive = function () {
-    window.map.classList.remove(`map--faded`);
-    window.adForm.classList.remove(`ad-form--disabled`);
-    window.mapFilters.removeAttribute(`disabled`);
+  mapFiltersFeatures.setAttribute(`disabled`, `disabled`);
 
-    for (let mapFiltersElement of mapFiltersElements) {
-      mapFiltersElement.removeAttribute(`disabled`);
-    }
+  const getActive = () => {
+    window.elements.map.classList.remove(`map--faded`);
+    window.elements.adForm.classList.remove(`ad-form--disabled`);
+    mapFilters.removeAttribute(`disabled`);
+
+    mapFiltersElements.forEach((mapFiltersElement) => {
+      mapFiltersElement.removeAttribute(`disabled`, `disabled`);
+    });
+
+    mapFiltersFeatures.removeAttribute(`disabled`);
   };
 
-  window.getInactive = function () {
-    window.map.classList.add(`map--faded`);
-    window.adForm.classList.add(`ad-form--disabled`);
-    window.mapFilters.setAttribute(`disabled`, `disabled`);
-    window.deletePins();
-    window.closePopup();
-    window.adForm.reset();
-    window.price.placeholder = `10000`;
+  const getInactive = () => {
+    window.elements.map.classList.add(`map--faded`);
+    window.elements.adForm.classList.add(`ad-form--disabled`);
+    mapFilters.setAttribute(`disabled`, `disabled`);
+    window.pin.deletePins();
+    window.popup.closePopup();
+    window.elements.adForm.reset();
+    mapFilters.reset();
+    price.placeholder = `10000`;
 
-    for (let mapFiltersElement of mapFiltersElements) {
+    mapFiltersElements.forEach((mapFiltersElement) => {
       mapFiltersElement.setAttribute(`disabled`, `disabled`);
-    }
+    });
 
-    window.resetMainPinCoords();
+    mapFiltersFeatures.setAttribute(`disabled`, `disabled`);
+    window.util.resetMainPinCoords();
   };
 
-  window.resetMainPinCoords = function () {
-    window.mainPin.style.left = `${window.MAIN_PIN_START_X}px`;
-    window.mainPin.style.top = `${window.MAIN_PIN_START_Y}px`;
-    window.updateAddressValue();
+  const resetMainPinCoords = () => {
+    window.elements.mainPin.style.left = `${window.elements.PinSpecification.MAIN_PIN_START_X}px`;
+    window.elements.mainPin.style.top = `${window.elements.PinSpecification.MAIN_PIN_START_Y}px`;
+    window.elements.address.value = `${parseInt(window.elements.PinSpecification.MAIN_PIN_START_X + window.elements.PinSpecification.PIN_WIDTH / 2, 10)}, ${parseInt(window.elements.PinSpecification.MAIN_PIN_START_Y + window.elements.PinSpecification.PIN_HEIGHT / 2, 10)}`;
   };
 
   const successTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
   const errorTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
 
-  window.SUCCESS_WINDOW = successTemplate.cloneNode(true);
-  window.ERROR_WINDOW = errorTemplate.cloneNode(true);
+  const SUCCESS_WINDOW = successTemplate.cloneNode(true);
+  const ERROR_WINDOW = errorTemplate.cloneNode(true);
 
-  const onErrorMessageClick = function (evt) {
+  const onErrorMessageClick = (evt) => {
     evt.preventDefault();
-    window.error.classList.add(`hidden`);
     hideErrorMessage();
   };
 
-  const onErrorMessageEscPress = function (evt) {
+  const onErrorMessageEscPress = (evt) => {
     if (evt.key === `Escape`) {
       evt.preventDefault();
-      window.error.classList.add(`hidden`);
       hideErrorMessage();
     }
   };
 
-  const onErrorButtonClick = function (evt) {
+  const onErrorButtonClick = (evt) => {
     evt.preventDefault();
-    window.error.classList.add(`hidden`);
     hideErrorMessage();
   };
 
-  window.main = document.querySelector(`main`);
+  const main = document.querySelector(`main`);
 
-  const hideErrorMessage = function () {
+  const hideErrorMessage = () => {
     const errorWindow = document.querySelector(`.error`);
 
     errorWindow.remove();
@@ -104,34 +85,34 @@
     document.removeEventListener(`keydown`, onErrorMessageEscPress);
   };
 
-  const onSuccessMessageEscPress = function (evt) {
+  const onSuccessMessageEscPress = (evt) => {
     if (evt.key === `Escape`) {
       evt.preventDefault();
       hideSuccessMessage();
     }
   };
 
-  const onSuccessMessageClick = function (evt) {
+  const onSuccessMessageClick = (evt) => {
     evt.preventDefault();
     hideSuccessMessage();
   };
 
-  const hideSuccessMessage = function () {
+  const hideSuccessMessage = () => {
     const successWindow = document.querySelector(`.success`);
     successWindow.remove();
     document.removeEventListener(`click`, onSuccessMessageClick);
     document.removeEventListener(`keydown`, onSuccessMessageEscPress);
   };
 
-  window.createMessage = function (messageElement) {
+  const createMessage = (messageElement) => {
     let fragment = document.createDocumentFragment();
     fragment.appendChild(messageElement);
-    window.main.appendChild(fragment);
+    main.appendChild(fragment);
   };
 
-  window.showErrorMessage = function () {
-    window.createMessage(window.ERROR_WINDOW);
-    window.getInactive();
+  const showErrorMessage = () => {
+    createMessage(ERROR_WINDOW);
+    getInactive();
     const errorButton = document.querySelector(`.error__button`);
 
 
@@ -140,12 +121,20 @@
     errorButton.addEventListener(`click`, onErrorButtonClick);
   };
 
-  window.showSuccessMessage = function () {
-    window.createMessage(window.SUCCESS_WINDOW);
-    window.getInactive();
+  const showSuccessMessage = () => {
+    createMessage(SUCCESS_WINDOW);
+    getInactive();
 
     document.addEventListener(`keydown`, onSuccessMessageEscPress);
     document.addEventListener(`click`, onSuccessMessageClick);
+  };
+
+  window.util = {
+    resetMainPinCoords,
+    getActive,
+    getInactive,
+    showErrorMessage,
+    showSuccessMessage
   };
 
 })();

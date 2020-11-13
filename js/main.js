@@ -1,27 +1,30 @@
 'use strict';
 
 (function () {
-  window.mainPin = document.querySelector(`.map__pin--main`);
 
-  window.resetMainPinCoords();
+  window.util.resetMainPinCoords();
 
-  let onSuccess = function (offersData) {
+  let onSuccess = (offersData) => {
     window.offers = offersData;
 
-    window.getActive();
-    window.createPins(window.getFilter(window.offers));
+    window.util.getActive();
+    window.pin.createPins(window.render.getFilter(offersData));
   };
 
-  window.mainPin.addEventListener(`mousedown`, function (evt) {
+  window.elements.mainPin.addEventListener(`mousedown`, (evt) => {
     if (evt.which === 1) {
-      window.download(onSuccess, window.onError);
+      window.download.download(onSuccess, window.util.showErrorMessage);
     }
   });
 
-  window.mainPin.addEventListener(`keydown`, function (evt) {
+  window.elements.mainPin.addEventListener(`keydown`, (evt) => {
     if (evt.key === `Enter`) {
-      window.download(onSuccess, window.onError);
+      window.download.download(onSuccess, window.util.showErrorMessage);
     }
   });
+
+  // window.main = {
+  //   offers
+  // };
 
 })();

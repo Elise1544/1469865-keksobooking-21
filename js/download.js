@@ -1,54 +1,53 @@
 'use strict';
+
 (function () {
   const URL = `https://21.javascript.pages.academy/keksobooking/data`;
 
-  window.codes = {
-    OK: 200,
-    PAGE_MOVED: 302,
-    NOT_FOUND: 404,
-    SERVER_ERROR: 500
-  };
-
   const TIMEOUT_IN_MS = 10000;
 
-  window.download = function (onSuccess, onError) {
+  const download = (onSuccess, onError) => {
     const xhr = new XMLHttpRequest();
     xhr.responseType = `json`;
 
     xhr.open(`GET`, URL);
-    xhr.addEventListener(`load`, function () {
+    xhr.addEventListener(`load`, () => {
       let error;
-      switch (xhr.status) {
-        case window.codes.OK:
-          onSuccess(xhr.response);
+      const {status, response, statusText} = xhr;
+      switch (status) {
+        case window.elements.Codes.OK:
+          onSuccess(response);
           break;
-        case window.codes.PAGE_MOVED:
+        case window.elements.Codes.PAGE_MOVED:
           error = `Страница была временно перемещена`;
           break;
-        case window.codes.NOT_FOUND:
+        case window.elements.Codes.NOT_FOUND:
           error = `Не найдено`;
           break;
-        case window.codes.SERVER_ERROR:
+        case window.elements.Codes.SERVER_ERROR:
           error = `Ошибка сервера`;
           break;
         default:
-          error = `Статус ответа: ` + xhr.status + xhr.statusText;
+          error = `Статус ответа: ${status} ${statusText}`;
       }
 
-      if (onError) {
-        window.onError(error);
+      if (error) {
+        onError(error);
       }
     });
 
-    xhr.addEventListener(`error`, function () {
-      window.onError(`Произошла ошибка соединения`);
+    xhr.addEventListener(`error`, () => {
+      onError(`Произошла ошибка соединения`);
     });
-    xhr.addEventListener(`timeout`, function () {
-      window.onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс`);
+    xhr.addEventListener(`timeout`, () => {
+      onError(`Запрос не успел выполниться за ${xhr.timeout} мс`);
     });
 
     xhr.timeout = TIMEOUT_IN_MS;
     xhr.send();
+  };
+
+  window.download = {
+    download
   };
 
 })();

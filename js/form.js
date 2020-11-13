@@ -1,53 +1,66 @@
 'use strict';
 
 (function () {
-  window.map = document.querySelector(`.map`);
-  window.adForm = document.querySelector(`.ad-form`);
-  const adFormReset = window.adForm.querySelector(`.ad-form__reset`);
-  const type = window.adForm.querySelector(`#type`);
-  window.price = window.adForm.querySelector(`#price`);
-  const timein = window.adForm.querySelector(`#timein`);
-  const timeout = window.adForm.querySelector(`#timeout`);
-  const roomNumber = window.adForm.querySelector(`#room_number`);
-  const capacity = window.adForm.querySelector(`#capacity`);
-  const address = window.adForm.querySelector(`#address`);
 
-  const validPriceMinimum = function () {
-    switch (type.value) {
-      case `flat`:
-        window.price.setAttribute(`min`, `1000`);
-        break;
-      case `house`:
-        window.price.setAttribute(`min`, `5000`);
-        break;
-      case `palace`:
-        window.price.setAttribute(`min`, `10000`);
-        break;
-      default:
-        window.price.setAttribute(`min`, `0`);
-        break;
-    }
-    window.price.reportValidity();
+  const adFormReset = window.elements.adForm.querySelector(`.ad-form__reset`);
+  const type = window.elements.adForm.querySelector(`#type`);
+  const price = window.elements.adForm.querySelector(`#price`);
+  const timein = window.elements.adForm.querySelector(`#timein`);
+  const timeout = window.elements.adForm.querySelector(`#timeout`);
+  const roomNumber = window.elements.adForm.querySelector(`#room_number`);
+  const capacity = window.elements.adForm.querySelector(`#capacity`);
+
+  const Prices = {
+    MIN_PRICE_FLAT: `1000`,
+    MIN_PRICE_HOUSE: `5000`,
+    MIN_PRICE_PALACE: `10000`,
+    MIN_PRICE_BUNGALOW: `0`,
   };
 
-  const validPrice = function () {
+  const Placeholders = {
+    PLACEHOLDER_FLAT: `5000`,
+    PLACEHOLDER_HOUSE: `10000`,
+    PLACEHOLDER_PALACE: `50000`,
+    PLACEHOLDER_BUNGALOW: `1000`
+  };
+
+  const validPriceMinimum = () => {
     switch (type.value) {
       case `flat`:
-        window.price.placeholder = `5000`;
+        price.setAttribute(`min`, Prices.MIN_PRICE_FLAT);
         break;
       case `house`:
-        window.price.placeholder = `10000`;
+        price.setAttribute(`min`, Prices.MIN_PRICE_HOUSE);
         break;
       case `palace`:
-        window.price.placeholder = `20000`;
+        price.setAttribute(`min`, Prices.MIN_PRICE_PALACE);
+        break;
+
+      default:
+        price.setAttribute(`min`, Prices.MIN_PRICE_BUNGALOW);
+        break;
+    }
+    price.reportValidity();
+  };
+
+  const validPrice = () => {
+    switch (type.value) {
+      case `flat`:
+        price.placeholder = Placeholders.PLACEHOLDER_FLAT;
+        break;
+      case `house`:
+        price.placeholder = Placeholders.PLACEHOLDER_HOUSE;
+        break;
+      case `palace`:
+        price.placeholder = Placeholders.PLACEHOLDER_PALACE;
         break;
       default:
-        window.price.placeholder = `1000`;
+        price.placeholder = Placeholders.PLACEHOLDER_BUNGALOW;
         break;
     }
   };
 
-  const validTime = function () {
+  const validTime = () => {
     switch (timein.value) {
       case `12:00`:
         timeout.value = `12:00`;
@@ -61,7 +74,7 @@
     }
   };
 
-  const validCapacity = function () {
+  const validCapacity = () => {
     switch (roomNumber.value) {
       case `1`:
         if (capacity.value === `1`) {
@@ -99,50 +112,59 @@
     capacity.reportValidity();
   };
 
-  window.updateAddressValue = function () {
-    address.value = `${parseInt(window.mainPin.style.left, 10)}, ${parseInt(window.mainPin.style.top, 10)}`;
+  const updateAddressValue = () => {
+    window.elements.address.value = `${parseInt(window.elements.mainPin.offsetLeft + window.elements.PinSpecification.PIN_WIDTH / 2, 10)}, ${parseInt(window.elements.mainPin.offsetTop + window.elements.PinSpecification.MAX_PIN_HEIGHT, 10)}`;
   };
 
-  window.price.addEventListener(`input`, function () {
+  price.addEventListener(`input`, () => {
     validPriceMinimum(type.value);
   });
 
-  type.addEventListener(`change`, function () {
+  type.addEventListener(`change`, () => {
     validPrice();
+    validPriceMinimum(type.value);
   });
 
-  timein.addEventListener(`change`, function () {
+  timein.addEventListener(`change`, () => {
     validTime();
   });
 
-  capacity.addEventListener(`change`, function () {
+  roomNumber.addEventListener(`change`, () => {
     validCapacity();
   });
 
-  const onSuccessUpload = function () {
-    window.showSuccessMessage();
-    window.map.classList.add(`map--faded`);
-    window.adForm.classList.add(`ad-form--disabled`);
+  capacity.addEventListener(`change`, () => {
+    validCapacity();
+  });
+
+  const onSuccessUpload = () => {
+    window.util.showSuccessMessage();
+    window.elements.map.classList.add(`map--faded`);
+    window.elements.adForm.classList.add(`ad-form--disabled`);
   };
 
-  window.adForm.addEventListener(`submit`, function (evt) {
+  window.elements.adForm.addEventListener(`submit`, (evt) => {
     evt.preventDefault();
     validCapacity();
     validPriceMinimum();
 
-    if (capacity.validity.valid && window.price.validity.valid) {
-      window.upload(new FormData(window.adForm), onSuccessUpload, window.showErrorMessage);
+    if (capacity.validity.valid && price.validity.valid) {
+      window.upload.upload(new FormData(window.elements.adForm), onSuccessUpload, window.util.showErrorMessage);
     }
   });
 
-  adFormReset.addEventListener(`click`, function () {
-    window.getInactive();
+  adFormReset.addEventListener(`click`, () => {
+    window.util.getInactive();
   });
 
-  adFormReset.addEventListener(`keydown`, function (evt) {
+  adFormReset.addEventListener(`keydown`, (evt) => {
     if (evt.key === `Enter`) {
-      window.getInactive();
+      window.util.getInactive();
     }
   });
+
+  window.form = {
+    updateAddressValue
+  };
 
 })();

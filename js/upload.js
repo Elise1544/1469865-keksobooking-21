@@ -2,24 +2,28 @@
 (function () {
   const URL_UPLOAD = `https://21.javascript.pages.academy/keksobooking`;
 
-  window.upload = function (data, onSuccess, onError) {
+  const upload = (data, onSuccess, onError) => {
     const xhr = new XMLHttpRequest();
     xhr.responseType = `json`;
 
-    xhr.addEventListener(`load`, function () {
-      if (xhr.status === window.codes.OK) {
+    xhr.addEventListener(`load`, () => {
+      if (xhr.status === window.elements.Codes.OK) {
         onSuccess(xhr.response);
       } else {
-        window.showErrorMessage();
+        window.util.showErrorMessage();
       }
     });
 
-    xhr.addEventListener(`error`, function () {
+    xhr.addEventListener(`error`, () => {
       onError(`Произошла ошибка соединения`);
     });
 
     xhr.open(`POST`, URL_UPLOAD);
     xhr.send(data);
+  };
+
+  window.upload = {
+    upload
   };
 
 })();
