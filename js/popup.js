@@ -2,19 +2,19 @@
 
 (function () {
 
-  let openPopup = (evt) => {
+  const openPopup = (evt) => {
 
     const popup = document.querySelector(`.popup`);
     if (popup) {
       closePopup();
     }
 
-    let targetElement = evt.target;
+    const targetElement = evt.target;
     if (targetElement.closest(`.map__pin:not(.map__pin--main)`) || targetElement.classList.contains(`map__pin:not(.map__pin--main)`)) {
       const button = targetElement.closest(`.map__pin`) ? targetElement.closest(`.map__pin`) : targetElement;
 
-      const dataAttr = button.getAttribute(`data-offer-index`);
-      const currentPinInfo = window.render.getFilter(window.offers)[dataAttr];
+      const dataAttr = button.dataset.offerIndex;
+      const currentPinInfo = window.render.visibleOffers[dataAttr];
       window.card.getPopup(currentPinInfo);
 
       button.classList.add(`map__pin--active`);
@@ -22,20 +22,16 @@
       const buttonClose = document.querySelector(`.popup__close`);
       buttonClose.addEventListener(`click`, onButtonCloseClick);
       document.addEventListener(`keydown`, onEscPress);
-    } else if (targetElement.classList.contains(`map__pin--main`)) {
-      // ;
-    } else {
-      // ;
     }
 
   };
 
-  let onButtonCloseClick = (evt) => {
+  const onButtonCloseClick = (evt) => {
     evt.preventDefault();
     closePopup();
   };
 
-  let onEscPress = (evt) => {
+  const onEscPress = (evt) => {
     if (evt.key === `Escape`) {
       evt.preventDefault();
       closePopup();
@@ -53,11 +49,11 @@
 
   };
 
-  let onPinClick = (evt) => {
+  const onPinClick = (evt) => {
     openPopup(evt);
   };
 
-  let onPinEnterPress = (evt) => {
+  const onPinEnterPress = (evt) => {
     if (evt.key === `Enter`) {
       openPopup(evt);
     }

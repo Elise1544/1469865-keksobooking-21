@@ -24,20 +24,25 @@
     PLACEHOLDER_BUNGALOW: `1000`
   };
 
+  const Times = {
+    twelve: `12:00`,
+    thirteen: `13:00`,
+    fourteen: `14:00`
+  };
+
   const validPriceMinimum = () => {
     switch (type.value) {
       case `flat`:
-        price.setAttribute(`min`, Prices.MIN_PRICE_FLAT);
+        price.min = Prices.MIN_PRICE_FLAT;
         break;
       case `house`:
-        price.setAttribute(`min`, Prices.MIN_PRICE_HOUSE);
+        price.min = Prices.MIN_PRICE_HOUSE;
         break;
       case `palace`:
-        price.setAttribute(`min`, Prices.MIN_PRICE_PALACE);
+        price.min = Prices.MIN_PRICE_PALACE;
         break;
-
       default:
-        price.setAttribute(`min`, Prices.MIN_PRICE_BUNGALOW);
+        price.min = Prices.MIN_PRICE_BUNGALOW;
         break;
     }
     price.reportValidity();
@@ -62,14 +67,14 @@
 
   const validTime = () => {
     switch (timein.value) {
-      case `12:00`:
-        timeout.value = `12:00`;
+      case Times.twelve:
+        timeout.value = Times.twelve;
         break;
-      case `13:00`:
-        timeout.value = `13:00`;
+      case Times.thirteen:
+        timeout.value = Times.thirteen;
         break;
-      case `14:00`:
-        timeout.value = `14:00`;
+      case Times.fourteen:
+        timeout.value = Times.fourteen;
         break;
     }
   };
@@ -151,6 +156,7 @@
     if (capacity.validity.valid && price.validity.valid) {
       window.upload.upload(new FormData(window.elements.adForm), onSuccessUpload, window.util.showErrorMessage);
     }
+
   });
 
   adFormReset.addEventListener(`click`, () => {

@@ -4,7 +4,7 @@
 
   window.util.resetMainPinCoords();
 
-  let onSuccess = (offersData) => {
+  const onSuccess = (offersData) => {
     window.offers = offersData;
 
     window.util.getActive();

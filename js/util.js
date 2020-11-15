@@ -5,26 +5,38 @@
   const mapFilters = document.querySelector(`.map__filters`);
   const mapFiltersElements = document.querySelectorAll(`.map__filter`);
   const mapFiltersFeatures = document.querySelector(`.map__features`);
+  const adFormElements = window.elements.adForm.querySelectorAll(`.ad-form__element`);
+  const adFormHeader = window.elements.adForm.querySelector(`.ad-form-header`);
   const price = document.querySelector(`#price`);
 
-  mapFilters.setAttribute(`disabled`, `disabled`);
+  mapFilters.disabled = true;
 
   mapFiltersElements.forEach((mapFiltersElement) => {
-    mapFiltersElement.setAttribute(`disabled`, `disabled`);
+    mapFiltersElement.disabled = true;
   });
 
-  mapFiltersFeatures.setAttribute(`disabled`, `disabled`);
+  mapFiltersFeatures.disabled = true;
+
+  adFormElements.forEach((adFormElement) => {
+    adFormElement.disabled = true;
+  });
+  adFormHeader.disabled = true;
 
   const getActive = () => {
     window.elements.map.classList.remove(`map--faded`);
     window.elements.adForm.classList.remove(`ad-form--disabled`);
-    mapFilters.removeAttribute(`disabled`);
+    mapFilters.disabled = false;
 
     mapFiltersElements.forEach((mapFiltersElement) => {
       mapFiltersElement.removeAttribute(`disabled`, `disabled`);
     });
 
     mapFiltersFeatures.removeAttribute(`disabled`);
+
+    adFormElements.forEach((adFormElement) => {
+      adFormElement.disabled = false;
+    });
+    adFormHeader.disabled = false;
   };
 
   const getInactive = () => {
@@ -42,6 +54,12 @@
     });
 
     mapFiltersFeatures.setAttribute(`disabled`, `disabled`);
+
+    adFormElements.forEach((adFormElement) => {
+      adFormElement.disabled = true;
+    });
+    adFormHeader.disabled = true;
+
     window.util.resetMainPinCoords();
   };
 
@@ -114,7 +132,6 @@
     createMessage(ERROR_WINDOW);
     getInactive();
     const errorButton = document.querySelector(`.error__button`);
-
 
     document.addEventListener(`keydown`, onErrorMessageEscPress);
     document.addEventListener(`click`, onErrorMessageClick);

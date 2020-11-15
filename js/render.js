@@ -8,6 +8,7 @@
   const filterRooms = mapFilter.querySelector(`#housing-rooms`);
   const filterGuests = mapFilter.querySelector(`#housing-guests`);
   const filterFeatures = mapFilter.querySelector(`#housing-features`);
+  const MAX_PINS = 5;
 
   const START_VALUE = `any`;
 
@@ -40,7 +41,7 @@
     let filteredOffers = [];
     let currentIndex = 0;
 
-    for (let i = 0; filteredOffers.length < 5; i++) {
+    for (let i = 0; filteredOffers.length < MAX_PINS; i++) {
       let foundElement = offersToFilter.find((offer, index) => {
         let isOfferFit = !!(offer.offer);
         let isTypeFit = filterType.value === START_VALUE ? true : offer.offer.type === filterType.value;
@@ -59,14 +60,19 @@
         filteredOffers.push(foundElement);
         offersToFilter = offersToFilter.splice(currentIndex + 1);
 
-        if (filteredOffers.length === 5) {
+        if (filteredOffers.length === MAX_PINS) {
           break;
         }
+      } else {
+        break;
       }
-      if (i > dataOffers.length - 1) {
+
+      if (i >= dataOffers.length - 1) {
         break;
       }
     }
+
+    window.render.visibleOffers = filteredOffers;
     return filteredOffers;
   };
 

@@ -2,26 +2,28 @@
 
 (function () {
 
+  const mapFilterContainer = document.querySelector(`.map__filters-container`);
+
+  const Types = {
+    bungalow: `бунгало`,
+    flat: `квартира`,
+    house: `дом`,
+    palace: `дворец`
+  };
+
+  const Features = [
+    `wifi`,
+    `dishwasher`,
+    `parking`,
+    `washer`,
+    `elevator`,
+    `conditioner`
+  ];
+
   const getPopup = (offers) => {
 
     const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
     const card = cardTemplate.cloneNode(true);
-
-    const Types = {
-      bungalow: `бунгало`,
-      flat: `квартира`,
-      house: `дом`,
-      palace: `дворец`
-    };
-
-    const Features = [
-      `wifi`,
-      `dishwasher`,
-      `parking`,
-      `washer`,
-      `elevator`,
-      `conditioner`
-    ];
 
     const getCapacityRoomsText = (roomsCount) => {
       switch (roomsCount) {
@@ -113,7 +115,6 @@
       }
     }
 
-    const mapFilterContainer = document.querySelector(`.map__filters-container`);
     window.elements.map.insertBefore(card, mapFilterContainer);
 
   };
